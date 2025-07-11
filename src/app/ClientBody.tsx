@@ -1,15 +1,17 @@
 "use client";
 
-import { ReactNode } from "react";
+import { useEffect } from "react";
 
-interface ClientBodyProps {
-  children: ReactNode;
-}
+export default function ClientBody({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  // Remove any extension-added classes during hydration
+  useEffect(() => {
+    // This runs only on the client after hydration
+    document.body.className = "antialiased";
+  }, []);
 
-export function ClientBody({ children }: ClientBodyProps) {
-  return (
-    <body className="min-h-screen bg-background font-sans antialiased">
-      {children}
-    </body>
-  );
+  return <div className="antialiased">{children}</div>;
 }
