@@ -1,11 +1,63 @@
+'use client'
+
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
 import { Label } from '@/components/ui/label'
-import { Star, Heart, Users, Target, Phone, Mail, MapPin, Instagram, Facebook, Linkedin } from 'lucide-react'
+import { Star, Heart, Users, Target, Phone, Mail, MapPin, Instagram, Facebook, Linkedin, ChevronLeft, ChevronRight, Sparkles, Brain } from 'lucide-react'
+import { useState, useEffect } from 'react'
 
 export default function HomePage() {
+  const [currentSlide, setCurrentSlide] = useState(0)
+  
+  const slides = [
+    {
+      title: "Transform Your Life with",
+      subtitle: "Mindful Coaching",
+      description: "Discover your inner strength, overcome limiting beliefs, and create the life you truly desire. I'm here to guide you on your journey to wellness and personal growth.",
+      image: "https://images.unsplash.com/photo-1506619216599-9d16d0903dfd?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1769&q=80",
+      primaryButton: "Start Your Journey",
+      secondaryButton: "Learn More",
+      stat: "500+ Lives Transformed",
+      icon: Heart
+    },
+    {
+      title: "Unlock Your",
+      subtitle: "Inner Potential",
+      description: "Break free from self-limiting patterns and step into your power. Through personalized coaching sessions, we'll work together to remove the blocks that keep you from living your best life.",
+      image: "https://images.unsplash.com/photo-1552058544-f2b08422138a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1698&q=80",
+      primaryButton: "Discover Your Path",
+      secondaryButton: "Book Consultation",
+      stat: "98% Success Rate",
+      icon: Sparkles
+    },
+    {
+      title: "Create Lasting",
+      subtitle: "Positive Change",
+      description: "Build sustainable habits and practices that support your wellbeing. Experience transformation that goes beyond surface-level changes to create deep, meaningful shifts in your life.",
+      image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2076&q=80",
+      primaryButton: "Begin Transformation",
+      secondaryButton: "View Programs",
+      stat: "10+ Years Experience",
+      icon: Brain
+    }
+  ]
+
+  const nextSlide = () => {
+    setCurrentSlide((prev) => (prev + 1) % slides.length)
+  }
+
+  const prevSlide = () => {
+    setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length)
+  }
+
+  // Auto-advance slides
+  useEffect(() => {
+    const timer = setInterval(nextSlide, 6000)
+    return () => clearInterval(timer)
+  }, [])
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-orange-50 via-white to-orange-50">
       {/* Navigation */}
@@ -23,45 +75,91 @@ export default function HomePage() {
         </div>
       </nav>
 
-      {/* Hero Section */}
-      <section id="home" className="pt-24 pb-16 px-4">
+      {/* Hero Slider Section */}
+      <section id="home" className="pt-24 pb-16 px-4 relative overflow-hidden">
         <div className="container mx-auto max-w-6xl">
-          <div className="flex flex-col lg:flex-row items-center gap-12">
-            <div className="flex-1 text-center lg:text-left">
-              <h1 className="text-5xl lg:text-6xl font-bold text-gray-900 mb-6 leading-tight">
-                Transform Your Life with
-                <span className="block" style={{color: '#FF7453'}}>Mindful Coaching</span>
-              </h1>
-              <p className="text-xl text-gray-600 mb-8 leading-relaxed">
-                Discover your inner strength, overcome limiting beliefs, and create the life you truly desire.
-                I&apos;m here to guide you on your journey to wellness and personal growth.
-              </p>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-                <Button size="lg" className="text-lg px-8 py-6 hover:opacity-90 transition-opacity" style={{backgroundColor: '#FF7453'}}>
-                  Start Your Journey
-                </Button>
-                <Button size="lg" variant="outline" className="text-lg px-8 py-6 hover:bg-orange-50 transition-colors" style={{borderColor: '#FF7453', color: '#FF7453'}}>
-                  Learn More
-                </Button>
-              </div>
-            </div>
-            <div className="flex-1">
-              <div className="relative">
-                <div className="w-full h-96 bg-gradient-to-br from-orange-200 to-orange-300 rounded-3xl overflow-hidden shadow-2xl">
-                  <img
-                    src="https://images.unsplash.com/photo-1506619216599-9d16d0903dfd?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1769&q=80"
-                    alt="Peaceful meditation and wellness"
-                    className="w-full h-full object-cover"
-                  />
-                </div>
-                <div className="absolute -bottom-4 -left-4 bg-white p-4 rounded-2xl shadow-lg">
-                  <div className="flex items-center gap-2">
-                    <Heart className="w-6 h-6" style={{color: '#FF7453'}} />
-                    <span className="font-semibold">500+ Lives Transformed</span>
+          <div className="relative h-[600px]">
+            {slides.map((slide, index) => {
+              const IconComponent = slide.icon
+              return (
+                <div
+                  key={index}
+                  className={`absolute inset-0 transition-all duration-1000 ease-in-out ${
+                    index === currentSlide 
+                      ? 'opacity-100 translate-x-0' 
+                      : index < currentSlide 
+                        ? 'opacity-0 -translate-x-full' 
+                        : 'opacity-0 translate-x-full'
+                  }`}
+                >
+                  <div className="flex flex-col lg:flex-row items-center gap-12 h-full">
+                    <div className="flex-1 text-center lg:text-left">
+                      <h1 className="text-5xl lg:text-6xl font-bold text-gray-900 mb-6 leading-tight">
+                        {slide.title}
+                        <span className="block" style={{color: '#FF7453'}}>{slide.subtitle}</span>
+                      </h1>
+                      <p className="text-xl text-gray-600 mb-8 leading-relaxed">
+                        {slide.description}
+                      </p>
+                      <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+                        <Button size="lg" className="text-lg px-8 py-6 hover:opacity-90 transition-opacity" style={{backgroundColor: '#FF7453'}}>
+                          {slide.primaryButton}
+                        </Button>
+                        <Button size="lg" variant="outline" className="text-lg px-8 py-6 hover:bg-orange-50 transition-colors" style={{borderColor: '#FF7453', color: '#FF7453'}}>
+                          {slide.secondaryButton}
+                        </Button>
+                      </div>
+                    </div>
+                    <div className="flex-1">
+                      <div className="relative">
+                        <div className="w-full h-96 bg-gradient-to-br from-orange-200 to-orange-300 rounded-3xl overflow-hidden shadow-2xl">
+                          <img
+                            src={slide.image}
+                            alt={`${slide.subtitle} - Wellness coaching`}
+                            className="w-full h-full object-cover"
+                          />
+                        </div>
+                        <div className="absolute -bottom-4 -left-4 bg-white p-4 rounded-2xl shadow-lg">
+                          <div className="flex items-center gap-2">
+                            <IconComponent className="w-6 h-6" style={{color: '#FF7453'}} />
+                            <span className="font-semibold">{slide.stat}</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
-              </div>
-            </div>
+              )
+            })}
+          </div>
+
+          {/* Navigation Arrows */}
+          <button
+            onClick={prevSlide}
+            className="absolute left-4 top-1/2 -translate-y-1/2 w-12 h-12 bg-white/80 hover:bg-white rounded-full shadow-lg flex items-center justify-center transition-all duration-200 hover:scale-110"
+          >
+            <ChevronLeft className="w-6 h-6 text-gray-700" />
+          </button>
+          <button
+            onClick={nextSlide}
+            className="absolute right-4 top-1/2 -translate-y-1/2 w-12 h-12 bg-white/80 hover:bg-white rounded-full shadow-lg flex items-center justify-center transition-all duration-200 hover:scale-110"
+          >
+            <ChevronRight className="w-6 h-6 text-gray-700" />
+          </button>
+
+          {/* Slide Indicators */}
+          <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex space-x-3">
+            {slides.map((_, index) => (
+              <button
+                key={index}
+                onClick={() => setCurrentSlide(index)}
+                className={`w-3 h-3 rounded-full transition-all duration-300 ${
+                  index === currentSlide 
+                    ? 'bg-orange-500 w-8' 
+                    : 'bg-white/60 hover:bg-white/80'
+                }`}
+              />
+            ))}
           </div>
         </div>
       </section>
