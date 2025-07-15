@@ -36,7 +36,7 @@ export default function AdminDashboardPage() {
       if (contactsResponse.ok) {
         const contactsData = await contactsResponse.json()
         const contacts = contactsData.contacts || []
-        const newContacts = contacts.filter((c: any) => c.status === 'new').length
+        const newContacts = contacts.filter((c: { status: string }) => c.status === 'new').length
         
         setStats({
           totalContacts: contacts.length,
@@ -91,7 +91,7 @@ export default function AdminDashboardPage() {
       <div>
         <h1 className="text-3xl font-bold text-gray-900">Dashboard</h1>
         <p className="text-gray-600 mt-1">
-          Welcome back, {user?.name}. Here's what's happening with your coaching platform.
+          Welcome back, {user?.name}. Here&apos;s what&apos;s happening with your coaching platform.
         </p>
       </div>
 

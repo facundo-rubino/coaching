@@ -48,10 +48,6 @@ export default function AdminContactsPage() {
     pages: 0
   })
 
-  useEffect(() => {
-    fetchContacts()
-  }, [pagination.page, statusFilter, search])
-
   const fetchContacts = async () => {
     try {
       setLoading(true)
@@ -83,6 +79,10 @@ export default function AdminContactsPage() {
       setLoading(false)
     }
   }
+
+  useEffect(() => {
+    fetchContacts()
+  }, [pagination.page, statusFilter, search])
 
   const updateContactStatus = async (id: string, status: 'new' | 'read' | 'replied') => {
     try {
