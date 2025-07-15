@@ -7,6 +7,7 @@ import { Textarea } from '@/components/ui/textarea'
 import { Label } from '@/components/ui/label'
 import { Star, Heart, Users, Target, Phone, Mail, MapPin, Instagram, Facebook, Linkedin, ChevronLeft, ChevronRight, Sparkles, Brain } from 'lucide-react'
 import { useState, useEffect } from 'react'
+import { MainContactForm } from '@/components/main-contact-form'
 
 export default function HomePage() {
   const [currentSlide, setCurrentSlide] = useState(0)
@@ -388,45 +389,7 @@ export default function HomePage() {
 
           <div className="grid lg:grid-cols-2 gap-12">
             <div>
-              <Card className="bg-white border-0 shadow-xl">
-                <CardHeader>
-                  <CardTitle className="text-2xl">Send Me a Message</CardTitle>
-                  <CardDescription>
-                    Fill out the form below and I&apos;ll get back to you within 24 hours.
-                  </CardDescription>
-                </CardHeader>
-                <CardContent className="space-y-6">
-                  <div className="grid grid-cols-2 gap-4">
-                    <div>
-                      <Label htmlFor="firstName">First Name</Label>
-                      <Input id="firstName" placeholder="Your first name" />
-                    </div>
-                    <div>
-                      <Label htmlFor="lastName">Last Name</Label>
-                      <Input id="lastName" placeholder="Your last name" />
-                    </div>
-                  </div>
-                  <div>
-                    <Label htmlFor="email">Email</Label>
-                    <Input id="email" type="email" placeholder="your@email.com" />
-                  </div>
-                  <div>
-                    <Label htmlFor="phone">Phone (Optional)</Label>
-                    <Input id="phone" type="tel" placeholder="Your phone number" />
-                  </div>
-                  <div>
-                    <Label htmlFor="message">Message</Label>
-                    <Textarea
-                      id="message"
-                      placeholder="Tell me about your goals and how I can help you..."
-                      rows={5}
-                    />
-                  </div>
-                  <Button className="w-full bg-rose-600 hover:bg-rose-700 text-lg py-6">
-                    Send Message
-                  </Button>
-                </CardContent>
-              </Card>
+              <MainContactForm />
             </div>
 
             <div className="space-y-8">
