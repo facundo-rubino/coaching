@@ -23,9 +23,18 @@ export async function GET(request: NextRequest) {
     const search = searchParams.get('search')
 
     // Build filter
-    const filter: any = {}
+    interface ContactFilter {
+      status?: 'new' | 'read' | 'replied'
+      $or?: Array<{
+        name?: { $regex: string; $options: string }
+        email?: { $regex: string; $options: string }
+        message?: { $regex: string; $options: string }
+      }>
+    }
+
+    const filter: ContactFilter = {}
     if (status && ['new', 'read', 'replied'].includes(status)) {
-      filter.status = status
+      filter.status = status as 'new' | 'read' | 'replied'
     }
     if (search) {
       filter.$or = [
