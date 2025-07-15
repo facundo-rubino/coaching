@@ -3,52 +3,55 @@
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Star, Heart, Users, Target, Phone, Mail, MapPin, Instagram, Facebook, Linkedin, ChevronLeft, ChevronRight, Sparkles, Brain } from 'lucide-react'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { MainContactForm } from '@/components/main-contact-form'
+import { useTranslation } from '@/components/translation-provider'
+import { LanguageToggle } from '@/components/ui/language-toggle'
 
 export default function HomePage() {
   const [currentSlide, setCurrentSlide] = useState(0)
+  const { t } = useTranslation()
   
   const slides = [
     {
-      title: "Transform Your Life with",
-      subtitle: "Mindful Coaching",
-      description: "Discover your inner strength, overcome limiting beliefs, and create the life you truly desire. I'm here to guide you on your journey to wellness and personal growth.",
+      title: t.hero.slides[0].title,
+      subtitle: t.hero.slides[0].subtitle,
+      description: t.hero.slides[0].description,
       image: "https://images.unsplash.com/photo-1506619216599-9d16d0903dfd?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1769&q=80",
-      primaryButton: "Start Your Journey",
-      secondaryButton: "Learn More",
-      stat: "500+ Lives Transformed",
+      primaryButton: t.hero.slides[0].primaryButton,
+      secondaryButton: t.hero.slides[0].secondaryButton,
+      stat: t.hero.slides[0].stat,
       icon: Heart
     },
     {
-      title: "Unlock Your",
-      subtitle: "Inner Potential",
-      description: "Break free from self-limiting patterns and step into your power. Through personalized coaching sessions, we'll work together to remove the blocks that keep you from living your best life.",
+      title: t.hero.slides[1].title,
+      subtitle: t.hero.slides[1].subtitle,
+      description: t.hero.slides[1].description,
       image: "https://images.unsplash.com/photo-1552058544-f2b08422138a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1698&q=80",
-      primaryButton: "Discover Your Path",
-      secondaryButton: "Book Consultation",
-      stat: "98% Success Rate",
+      primaryButton: t.hero.slides[1].primaryButton,
+      secondaryButton: t.hero.slides[1].secondaryButton,
+      stat: t.hero.slides[1].stat,
       icon: Sparkles
     },
     {
-      title: "Create Lasting",
-      subtitle: "Positive Change",
-      description: "Build sustainable habits and practices that support your wellbeing. Experience transformation that goes beyond surface-level changes to create deep, meaningful shifts in your life.",
+      title: t.hero.slides[2].title,
+      subtitle: t.hero.slides[2].subtitle,
+      description: t.hero.slides[2].description,
       image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2076&q=80",
-      primaryButton: "Begin Transformation",
-      secondaryButton: "View Programs",
-      stat: "10+ Years Experience",
+      primaryButton: t.hero.slides[2].primaryButton,
+      secondaryButton: t.hero.slides[2].secondaryButton,
+      stat: t.hero.slides[2].stat,
       icon: Brain
     }
   ]
 
-  const nextSlide = () => {
+  const nextSlide = useCallback(() => {
     setCurrentSlide((prev) => (prev + 1) % slides.length)
-  }
+  }, [slides.length])
 
-  const prevSlide = () => {
+  const prevSlide = useCallback(() => {
     setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length)
-  }
+  }, [slides.length])
 
   // Auto-advance slides
   useEffect(() => {
@@ -63,13 +66,16 @@ export default function HomePage() {
         <div className="container mx-auto px-4 py-4 flex justify-between items-center">
           <div className="text-2xl font-bold" style={{color: '#FF7453'}}>Serenella</div>
           <div className="hidden md:flex space-x-8">
-            <a href="#home" className="text-gray-700 hover:text-orange-600 transition-colors">Home</a>
-            <a href="#about" className="text-gray-700 hover:text-orange-600 transition-colors">About</a>
-            <a href="#services" className="text-gray-700 hover:text-orange-600 transition-colors">Services</a>
-            <a href="#testimonials" className="text-gray-700 hover:text-orange-600 transition-colors">Testimonials</a>
-            <a href="#contact" className="text-gray-700 hover:text-orange-600 transition-colors">Contact</a>
+            <a href="#home" className="text-gray-700 hover:text-orange-600 transition-colors">{t.nav.home}</a>
+            <a href="#about" className="text-gray-700 hover:text-orange-600 transition-colors">{t.nav.about}</a>
+            <a href="#services" className="text-gray-700 hover:text-orange-600 transition-colors">{t.nav.services}</a>
+            <a href="#testimonials" className="text-gray-700 hover:text-orange-600 transition-colors">{t.nav.testimonials}</a>
+            <a href="#contact" className="text-gray-700 hover:text-orange-600 transition-colors">{t.nav.contact}</a>
           </div>
-          <Button className="hover:opacity-90 transition-opacity" style={{backgroundColor: '#FF7453'}}>Book Session</Button>
+          <div className="flex items-center gap-4">
+            <LanguageToggle />
+            <Button className="hover:opacity-90 transition-opacity" style={{backgroundColor: '#FF7453'}}>{t.nav.bookSession}</Button>
+          </div>
         </div>
       </nav>
 
@@ -166,10 +172,9 @@ export default function HomePage() {
       <section id="about" className="py-16 px-4 bg-white">
         <div className="container mx-auto max-w-6xl">
           <div className="text-center mb-12">
-            <h2 className="text-4xl font-bold text-gray-900 mb-4">About Serenella</h2>
+            <h2 className="text-4xl font-bold text-gray-900 mb-4">{t.about.title}</h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Certified wellness coach with over 10 years of experience helping individuals
-              discover their potential and create lasting positive change.
+              {t.about.subtitle}
             </p>
           </div>
 
@@ -182,29 +187,25 @@ export default function HomePage() {
               />
             </div>
             <div className="space-y-6">
-              <h3 className="text-3xl font-bold text-gray-900">My Journey to Helping Others</h3>
+              <h3 className="text-3xl font-bold text-gray-900">{t.about.journeyTitle}</h3>
               <p className="text-gray-600 leading-relaxed">
-                After experiencing my own transformation through mindfulness and holistic wellness practices,
-                I discovered my calling to help others on their journey. My approach combines evidence-based
-                coaching techniques with intuitive guidance to create a safe space for growth and healing.
+                {t.about.paragraph1}
               </p>
               <p className="text-gray-600 leading-relaxed">
-                I believe that everyone has the inner wisdom to create the life they desire. My role is to
-                help you uncover that wisdom, remove the barriers that hold you back, and support you as
-                you step into your most authentic self.
+                {t.about.paragraph2}
               </p>
               <div className="grid grid-cols-3 gap-4 pt-4">
                 <div className="text-center">
                   <div className="text-3xl font-bold" style={{color: '#FF7453'}}>500+</div>
-                  <div className="text-sm text-gray-600">Clients Coached</div>
+                  <div className="text-sm text-gray-600">{t.about.stats.clients}</div>
                 </div>
                 <div className="text-center">
                   <div className="text-3xl font-bold" style={{color: '#FF7453'}}>10+</div>
-                  <div className="text-sm text-gray-600">Years Experience</div>
+                  <div className="text-sm text-gray-600">{t.about.stats.experience}</div>
                 </div>
                 <div className="text-center">
                   <div className="text-3xl font-bold" style={{color: '#FF7453'}}>98%</div>
-                  <div className="text-sm text-gray-600">Success Rate</div>
+                  <div className="text-sm text-gray-600">{t.about.stats.success}</div>
                 </div>
               </div>
             </div>
@@ -216,10 +217,9 @@ export default function HomePage() {
       <section id="services" className="py-16 px-4 bg-gradient-to-br from-orange-50 to-orange-100">
         <div className="container mx-auto max-w-6xl">
           <div className="text-center mb-12">
-            <h2 className="text-4xl font-bold text-gray-900 mb-4">Coaching Services</h2>
+            <h2 className="text-4xl font-bold text-gray-900 mb-4">{t.services.title}</h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Personalized coaching programs designed to help you overcome challenges
-              and create lasting positive change in your life.
+              {t.services.subtitle}
             </p>
           </div>
 
@@ -229,16 +229,15 @@ export default function HomePage() {
                 <div className="w-16 h-16 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-4">
                   <Heart className="w-8 h-8" style={{color: '#FF7453'}} />
                 </div>
-                <CardTitle className="text-xl">Life Coaching</CardTitle>
+                <CardTitle className="text-xl">{t.services.lifeCoaching.title}</CardTitle>
               </CardHeader>
               <CardContent>
                 <CardDescription className="text-center text-gray-600 leading-relaxed">
-                  Discover your purpose, set meaningful goals, and create a roadmap for the life you truly want to live.
-                  Focus on personal growth and self-discovery.
+                  {t.services.lifeCoaching.description}
                 </CardDescription>
                 <div className="mt-6 text-center">
-                  <div className="text-2xl font-bold mb-2" style={{color: '#FF7453'}}>$150</div>
-                  <div className="text-sm text-gray-500">per session</div>
+                  <div className="text-2xl font-bold mb-2" style={{color: '#FF7453'}}>{t.services.lifeCoaching.price}</div>
+                  <div className="text-sm text-gray-500">{t.services.lifeCoaching.perSession}</div>
                 </div>
               </CardContent>
             </Card>
@@ -248,16 +247,15 @@ export default function HomePage() {
                 <div className="w-16 h-16 bg-violet-100 rounded-full flex items-center justify-center mx-auto mb-4">
                   <Target className="w-8 h-8 text-violet-600" />
                 </div>
-                <CardTitle className="text-xl">Wellness Coaching</CardTitle>
+                <CardTitle className="text-xl">{t.services.wellnessCoaching.title}</CardTitle>
               </CardHeader>
               <CardContent>
                 <CardDescription className="text-center text-gray-600 leading-relaxed">
-                  Build healthy habits, improve your relationship with food, exercise, and stress.
-                  Create sustainable wellness practices for mind, body, and spirit.
+                  {t.services.wellnessCoaching.description}
                 </CardDescription>
                 <div className="mt-6 text-center">
-                  <div className="text-2xl font-bold text-violet-600 mb-2">$125</div>
-                  <div className="text-sm text-gray-500">per session</div>
+                  <div className="text-2xl font-bold text-violet-600 mb-2">{t.services.wellnessCoaching.price}</div>
+                  <div className="text-sm text-gray-500">{t.services.wellnessCoaching.perSession}</div>
                 </div>
               </CardContent>
             </Card>
@@ -267,16 +265,15 @@ export default function HomePage() {
                 <div className="w-16 h-16 bg-emerald-100 rounded-full flex items-center justify-center mx-auto mb-4">
                   <Users className="w-8 h-8 text-emerald-600" />
                 </div>
-                <CardTitle className="text-xl">Group Programs</CardTitle>
+                <CardTitle className="text-xl">{t.services.groupPrograms.title}</CardTitle>
               </CardHeader>
               <CardContent>
                 <CardDescription className="text-center text-gray-600 leading-relaxed">
-                  Join a supportive community of like-minded individuals on similar journeys.
-                  Experience the power of group coaching and shared transformation.
+                  {t.services.groupPrograms.description}
                 </CardDescription>
                 <div className="mt-6 text-center">
-                  <div className="text-2xl font-bold text-emerald-600 mb-2">$75</div>
-                  <div className="text-sm text-gray-500">per session</div>
+                  <div className="text-2xl font-bold text-emerald-600 mb-2">{t.services.groupPrograms.price}</div>
+                  <div className="text-sm text-gray-500">{t.services.groupPrograms.perSession}</div>
                 </div>
               </CardContent>
             </Card>
@@ -288,9 +285,9 @@ export default function HomePage() {
       <section id="testimonials" className="py-16 px-4 bg-white">
         <div className="container mx-auto max-w-6xl">
           <div className="text-center mb-12">
-            <h2 className="text-4xl font-bold text-gray-900 mb-4">Client Success Stories</h2>
+            <h2 className="text-4xl font-bold text-gray-900 mb-4">{t.testimonials.title}</h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Real transformations from real people who have worked with Serenella.
+              {t.testimonials.subtitle}
             </p>
           </div>
 
@@ -303,8 +300,7 @@ export default function HomePage() {
                   ))}
                 </div>
                 <p className="text-gray-700 italic mb-4">
-                  &quot;Serenella helped me break through years of self-doubt and limiting beliefs.
-                  I finally feel confident and aligned with my true purpose.&quot;
+                  &quot;{t.testimonials.reviews[0].text}&quot;
                 </p>
                 <div className="flex items-center">
                   <img
@@ -313,8 +309,8 @@ export default function HomePage() {
                     className="w-12 h-12 rounded-full object-cover mr-4"
                   />
                   <div>
-                    <div className="font-semibold">Sarah M.</div>
-                    <div className="text-sm text-gray-600">Marketing Executive</div>
+                    <div className="font-semibold">{t.testimonials.reviews[0].name}</div>
+                    <div className="text-sm text-gray-600">{t.testimonials.reviews[0].title}</div>
                   </div>
                 </div>
               </CardContent>
@@ -328,8 +324,7 @@ export default function HomePage() {
                   ))}
                 </div>
                 <p className="text-gray-700 italic mb-4">
-                  &quot;The wellness coaching transformed my relationship with stress and helped me
-                  create sustainable healthy habits that actually stick.&quot;
+                  &quot;{t.testimonials.reviews[1].text}&quot;
                 </p>
                 <div className="flex items-center">
                   <img
@@ -338,8 +333,8 @@ export default function HomePage() {
                     className="w-12 h-12 rounded-full object-cover mr-4"
                   />
                   <div>
-                    <div className="font-semibold">Michael R.</div>
-                    <div className="text-sm text-gray-600">Software Engineer</div>
+                    <div className="font-semibold">{t.testimonials.reviews[1].name}</div>
+                    <div className="text-sm text-gray-600">{t.testimonials.reviews[1].title}</div>
                   </div>
                 </div>
               </CardContent>
@@ -353,8 +348,7 @@ export default function HomePage() {
                   ))}
                 </div>
                 <p className="text-gray-700 italic mb-4">
-                  &quot;Serenella&apos;s group program gave me a supportive community and tools
-                  I use every day. Life-changing experience!&quot;
+                  &quot;{t.testimonials.reviews[2].text}&quot;
                 </p>
                 <div className="flex items-center">
                   <img
@@ -363,8 +357,8 @@ export default function HomePage() {
                     className="w-12 h-12 rounded-full object-cover mr-4"
                   />
                   <div>
-                    <div className="font-semibold">Emma L.</div>
-                    <div className="text-sm text-gray-600">Teacher</div>
+                    <div className="font-semibold">{t.testimonials.reviews[2].name}</div>
+                    <div className="text-sm text-gray-600">{t.testimonials.reviews[2].title}</div>
                   </div>
                 </div>
               </CardContent>
@@ -377,10 +371,9 @@ export default function HomePage() {
       <section id="contact" className="py-16 px-4 bg-gradient-to-br from-gray-50 to-rose-50">
         <div className="container mx-auto max-w-6xl">
           <div className="text-center mb-12">
-            <h2 className="text-4xl font-bold text-gray-900 mb-4">Get In Touch</h2>
+            <h2 className="text-4xl font-bold text-gray-900 mb-4">{t.contact.title}</h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Ready to start your transformation journey? I&apos;d love to hear from you
-              and discuss how we can work together.
+              {t.contact.subtitle}
             </p>
           </div>
 
@@ -391,14 +384,14 @@ export default function HomePage() {
 
             <div className="space-y-8">
               <div>
-                <h3 className="text-2xl font-bold text-gray-900 mb-6">Let&apos;s Connect</h3>
+                <h3 className="text-2xl font-bold text-gray-900 mb-6">{t.contact.connect}</h3>
                 <div className="space-y-4">
                   <div className="flex items-center gap-4">
                     <div className="w-12 h-12 bg-rose-100 rounded-full flex items-center justify-center">
                       <Phone className="w-6 h-6 text-rose-600" />
                     </div>
                     <div>
-                      <div className="font-semibold">Phone</div>
+                      <div className="font-semibold">{t.contact.phone}</div>
                       <div className="text-gray-600">+1 (555) 123-4567</div>
                     </div>
                   </div>
@@ -407,7 +400,7 @@ export default function HomePage() {
                       <Mail className="w-6 h-6 text-violet-600" />
                     </div>
                     <div>
-                      <div className="font-semibold">Email</div>
+                      <div className="font-semibold">{t.contact.email}</div>
                       <div className="text-gray-600">hello@serenellacoaching.com</div>
                     </div>
                   </div>
@@ -416,15 +409,15 @@ export default function HomePage() {
                       <MapPin className="w-6 h-6 text-emerald-600" />
                     </div>
                     <div>
-                      <div className="font-semibold">Location</div>
-                      <div className="text-gray-600">Virtual & In-Person Sessions</div>
+                      <div className="font-semibold">{t.contact.location}</div>
+                      <div className="text-gray-600">{t.contact.virtualSessions}</div>
                     </div>
                   </div>
                 </div>
               </div>
 
               <div>
-                <h4 className="text-xl font-semibold text-gray-900 mb-4">Follow My Journey</h4>
+                <h4 className="text-xl font-semibold text-gray-900 mb-4">{t.contact.followJourney}</h4>
                 <div className="flex gap-4">
                   <a href="#" className="w-12 h-12 bg-rose-100 rounded-full flex items-center justify-center hover:bg-rose-200 transition-colors">
                     <Instagram className="w-6 h-6 text-rose-600" />
@@ -439,12 +432,12 @@ export default function HomePage() {
               </div>
 
               <div className="bg-gradient-to-br from-rose-100 to-violet-100 p-6 rounded-2xl">
-                <h4 className="text-xl font-semibold text-gray-900 mb-2">Ready to Begin?</h4>
+                <h4 className="text-xl font-semibold text-gray-900 mb-2">{t.contact.readyToBegin}</h4>
                 <p className="text-gray-700 mb-4">
-                  Book a complimentary 30-minute discovery call to see if we&apos;re a good fit.
+                  {t.contact.discoveryCall}
                 </p>
                 <Button className="bg-rose-600 hover:bg-rose-700">
-                  Schedule Free Call
+                  {t.contact.scheduleFreeCall}
                 </Button>
               </div>
             </div>
@@ -459,7 +452,7 @@ export default function HomePage() {
             <div>
               <div className="text-2xl font-bold text-rose-400 mb-4">Serenella</div>
               <p className="text-gray-400 mb-4">
-                Empowering individuals to create meaningful change and live their most authentic lives.
+                {t.footer.description}
               </p>
               <div className="flex gap-4">
                 <Instagram className="w-5 h-5 text-gray-400 hover:text-rose-400 cursor-pointer transition-colors" />
@@ -468,34 +461,34 @@ export default function HomePage() {
               </div>
             </div>
             <div>
-              <h4 className="font-semibold mb-4">Services</h4>
+              <h4 className="font-semibold mb-4">{t.footer.services}</h4>
               <ul className="space-y-2 text-gray-400">
-                <li><a href="#" className="hover:text-white transition-colors">Life Coaching</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">Wellness Coaching</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">Group Programs</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">Workshops</a></li>
+                <li><a href="#" className="hover:text-white transition-colors">{t.footer.lifeCoaching}</a></li>
+                <li><a href="#" className="hover:text-white transition-colors">{t.footer.wellnessCoaching}</a></li>
+                <li><a href="#" className="hover:text-white transition-colors">{t.footer.groupPrograms}</a></li>
+                <li><a href="#" className="hover:text-white transition-colors">{t.footer.workshops}</a></li>
               </ul>
             </div>
             <div>
-              <h4 className="font-semibold mb-4">Resources</h4>
+              <h4 className="font-semibold mb-4">{t.footer.resources}</h4>
               <ul className="space-y-2 text-gray-400">
-                <li><a href="#" className="hover:text-white transition-colors">Blog</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">Free Guides</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">Meditation Library</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">Success Stories</a></li>
+                <li><a href="#" className="hover:text-white transition-colors">{t.footer.blog}</a></li>
+                <li><a href="#" className="hover:text-white transition-colors">{t.footer.freeGuides}</a></li>
+                <li><a href="#" className="hover:text-white transition-colors">{t.footer.meditationLibrary}</a></li>
+                <li><a href="#" className="hover:text-white transition-colors">{t.footer.successStories}</a></li>
               </ul>
             </div>
             <div>
-              <h4 className="font-semibold mb-4">Contact</h4>
+              <h4 className="font-semibold mb-4">{t.footer.contact}</h4>
               <ul className="space-y-2 text-gray-400">
                 <li>hello@serenellacoaching.com</li>
                 <li>+1 (555) 123-4567</li>
-                <li>Virtual & In-Person</li>
+                <li>{t.contact.virtualSessions}</li>
               </ul>
             </div>
           </div>
           <div className="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
-            <p>&copy; 2025 Serenella Coaching. All rights reserved.</p>
+            <p>{t.footer.copyright}</p>
           </div>
         </div>
       </footer>
