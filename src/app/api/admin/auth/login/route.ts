@@ -5,10 +5,15 @@ import { generateToken } from '@/lib/auth'
 
 export async function POST(request: NextRequest) {
   try {
+    console.log('Login attempt started')
+    
     await connectDB()
+    console.log('Database connected successfully')
 
     const body = await request.json()
     const { email, password } = body
+
+    console.log('Login attempt for email:', email)
 
     if (!email || !password) {
       return NextResponse.json(
@@ -19,6 +24,8 @@ export async function POST(request: NextRequest) {
 
     // Find user by email
     const user = await User.findOne({ email, isActive: true })
+    console.log('User found:', user ? 'Yes' : 'No')
+    
     if (!user) {
       return NextResponse.json(
         { error: 'Invalid credentials' },
@@ -71,8 +78,14 @@ export async function POST(request: NextRequest) {
     return response
   } catch (error) {
     console.error('Login error:', error)
+    console.error('Error details:', error instanceof Error ? error.message : 'Unknown error')
+    console.error('Error stack:', error instanceof Error ? error.stack : 'No stack trace')
+    
     return NextResponse.json(
-      { error: 'Internal server error' },
+      { 
+        error: 'Internal server error',
+        details: process.env.NODE_ENV === 'development' ? error instanceof Error ? error.message : 'Unknown error' : undefined
+      },
       { status: 500 }
     )
   }
