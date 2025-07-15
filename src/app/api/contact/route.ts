@@ -20,7 +20,12 @@ export async function POST(request: NextRequest) {
     }
 
     // Create new contact submission
-    const contactData: any = {
+    const contactData: {
+      name: string
+      email: string
+      message: string
+      phone?: string
+    } = {
       name,
       email,
       message
@@ -42,13 +47,13 @@ export async function POST(request: NextRequest) {
       { status: 201 }
     )
 
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('Contact form submission error:', error)
 
     // Handle validation errors
-    if (error.name === 'ValidationError') {
-      const validationErrors = Object.values(error.errors).map(
-        (err: any) => err.message
+    if (error && typeof error === 'object' && 'name' in error && error.name === 'ValidationError' && 'errors' in error) {
+      const validationErrors = Object.values((error as { errors: Record<string, { message: string }> }).errors).map(
+        (err) => err.message
       )
       return NextResponse.json(
         { 
@@ -60,7 +65,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Handle duplicate email errors (if you add unique constraint)
-    if (error.code === 11000) {
+    if (error && typeof error === 'object' && 'code' in error && error.code === 11000) {
       return NextResponse.json(
         { error: 'This email has already been submitted recently' },
         { status: 409 }

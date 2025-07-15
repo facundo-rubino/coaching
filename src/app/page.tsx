@@ -2,9 +2,6 @@
 
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { Input } from '@/components/ui/input'
-import { Textarea } from '@/components/ui/textarea'
-import { Label } from '@/components/ui/label'
 import { Star, Heart, Users, Target, Phone, Mail, MapPin, Instagram, Facebook, Linkedin, ChevronLeft, ChevronRight, Sparkles, Brain } from 'lucide-react'
 import { useState, useEffect } from 'react'
 import { MainContactForm } from '@/components/main-contact-form'
@@ -57,7 +54,7 @@ export default function HomePage() {
   useEffect(() => {
     const timer = setInterval(nextSlide, 6000)
     return () => clearInterval(timer)
-  }, [])
+  }, [nextSlide])
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-orange-50 via-white to-orange-50">
