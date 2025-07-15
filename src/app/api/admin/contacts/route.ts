@@ -1,19 +1,59 @@
 import { NextRequest, NextResponse } from 'next/server'
 import connectDB from '@/lib/database'
 import Contact from '@/models/Contact'
+import { validateAdminAccess } from '@/lib/auth'
 
-export async function GET() {
+export async function GET(request: NextRequest) {
   try {
+    // Validate admin access
+    const user = validateAdminAccess(request)
+    if (!user) {
+      return NextResponse.json(
+        { error: 'Unauthorized' },
+        { status: 401 }
+      )
+    }
+
     await connectDB()
 
-    const contacts = await Contact.find({})
-      .sort({ submittedAt: -1 })
-      .limit(100) // Limit to latest 100 submissions
+    const { searchParams } = new URL(request.url)
+    const page = parseInt(searchParams.get('page') || '1')
+    const limit = parseInt(searchParams.get('limit') || '20')
+    const status = searchParams.get('status')
+    const search = searchParams.get('search')
+
+    // Build filter
+    const filter: any = {}
+    if (status && ['new', 'read', 'replied'].includes(status)) {
+      filter.status = status
+    }
+    if (search) {
+      filter.$or = [
+        { name: { $regex: search, $options: 'i' } },
+        { email: { $regex: search, $options: 'i' } },
+        { message: { $regex: search, $options: 'i' } }
+      ]
+    }
+
+    const skip = (page - 1) * limit
+
+    const [contacts, total] = await Promise.all([
+      Contact.find(filter)
+        .sort({ submittedAt: -1 })
+        .skip(skip)
+        .limit(limit),
+      Contact.countDocuments(filter)
+    ])
 
     return NextResponse.json({ 
       success: true,
-      count: contacts.length,
-      contacts 
+      contacts,
+      pagination: {
+        page,
+        limit,
+        total,
+        pages: Math.ceil(total / limit)
+      }
     })
   } catch (error) {
     console.error('Error fetching contacts:', error)
@@ -30,6 +70,15 @@ export async function GET() {
 // PATCH endpoint to update contact status
 export async function PATCH(request: NextRequest) {
   try {
+    // Validate admin access
+    const user = validateAdminAccess(request)
+    if (!user) {
+      return NextResponse.json(
+        { error: 'Unauthorized' },
+        { status: 401 }
+      )
+    }
+
     await connectDB()
 
     const body = await request.json()
@@ -71,6 +120,52 @@ export async function PATCH(request: NextRequest) {
     console.error('Error updating contact:', error)
     return NextResponse.json(
       { error: 'Failed to update contact' },
+      { status: 500 }
+    )
+  }
+}
+
+// DELETE endpoint to delete contact
+export async function DELETE(request: NextRequest) {
+  try {
+    // Validate admin access
+    const user = validateAdminAccess(request)
+    if (!user) {
+      return NextResponse.json(
+        { error: 'Unauthorized' },
+        { status: 401 }
+      )
+    }
+
+    await connectDB()
+
+    const { searchParams } = new URL(request.url)
+    const id = searchParams.get('id')
+
+    if (!id) {
+      return NextResponse.json(
+        { error: 'Contact ID is required' },
+        { status: 400 }
+      )
+    }
+
+    const contact = await Contact.findByIdAndDelete(id)
+
+    if (!contact) {
+      return NextResponse.json(
+        { error: 'Contact not found' },
+        { status: 404 }
+      )
+    }
+
+    return NextResponse.json({ 
+      success: true,
+      message: 'Contact deleted successfully'
+    })
+  } catch (error) {
+    console.error('Error deleting contact:', error)
+    return NextResponse.json(
+      { error: 'Failed to delete contact' },
       { status: 500 }
     )
   }
