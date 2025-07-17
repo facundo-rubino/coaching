@@ -5,6 +5,7 @@ import { cn } from "@/lib/utils";
 import WhatsAppButton from '../components/ui/wppButton';
 import { TranslationProvider } from "@/components/translation-provider";
 import { FloatingLanguageToggle } from "@/components/floating-language-toggle";
+import Navbar from '@/components/ui/Navbar';
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -31,6 +32,7 @@ export default function RootLayout({
         <TranslationProvider>
           <FloatingLanguageToggle />
           <WhatsAppButton />
+          <Navbar />
           {children}
         </TranslationProvider>
       </body>

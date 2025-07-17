@@ -1,4 +1,5 @@
 'use client'
+import Link from 'next/link';
 
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
@@ -61,24 +62,6 @@ export default function HomePage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-orange-50 via-white to-orange-50">
-      {/* Navigation */}
-      <nav className="fixed top-0 w-full bg-white/80 backdrop-blur-md border-b border-orange-100 z-50">
-        <div className="container mx-auto px-4 py-4 flex justify-between items-center">
-          <div className="text-2xl font-bold" style={{color: '#FF7453'}}>Serenella</div>
-          <div className="hidden md:flex space-x-8">
-            <a href="#home" className="text-gray-700 hover:text-orange-600 transition-colors">{t.nav.home}</a>
-            <a href="#about" className="text-gray-700 hover:text-orange-600 transition-colors">{t.nav.about}</a>
-            <a href="#services" className="text-gray-700 hover:text-orange-600 transition-colors">{t.nav.services}</a>
-            <a href="#testimonials" className="text-gray-700 hover:text-orange-600 transition-colors">{t.nav.testimonials}</a>
-            <a href="#contact" className="text-gray-700 hover:text-orange-600 transition-colors">{t.nav.contact}</a>
-          </div>
-          <div className="flex items-center gap-4">
-            <LanguageToggle />
-            <Button className="hover:opacity-90 transition-opacity" style={{backgroundColor: '#FF7453'}}>{t.nav.bookSession}</Button>
-          </div>
-        </div>
-      </nav>
-
       {/* Hero Slider Section */}
       <section id="home" className="pt-24 pb-16 px-4 relative overflow-hidden">
         <div className="container mx-auto max-w-6xl">
