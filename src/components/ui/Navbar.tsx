@@ -11,8 +11,8 @@ export default function Navbar() {
   return (
     <nav className="fixed top-0 w-full bg-white/80 backdrop-blur-md border-b border-orange-100 z-50">
       <div className="container mx-auto px-4 py-4 flex justify-between items-center">
-        <div className="text-2xl font-bold" style={{ color: '#FF7453' }}>
-          Serenella
+        <div className="text-2xl font-bold text-brand">
+          SerenellaCoaching
         </div>
         <div className="hidden md:flex space-x-8">
           <Link href="/" className="text-gray-700 hover:text-orange-600 transition-colors">{t.nav.home}</Link>
@@ -23,7 +23,7 @@ export default function Navbar() {
         </div>
         <div className="flex items-center gap-4">
           <LanguageToggle />
-          <button className="hover:opacity-90 transition-opacity" style={{ backgroundColor: '#FF7453' }}>
+          <button className="hover:opacity-90 transition-opacity bg-brand text-white">
             {t.nav.bookSession}
           </button>
         </div>

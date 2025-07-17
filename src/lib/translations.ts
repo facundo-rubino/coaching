@@ -4,7 +4,7 @@ export const translations = {
     nav: {
       home: "Home",
       about: "About",
-      services: "Services",
+      therapies: "Therapies",
       testimonials: "Testimonials",
       contact: "Contact",
       bookSession: "Book Session"
@@ -132,7 +132,7 @@ export const translations = {
     nav: {
       home: "Inicio",
       about: "Acerca de",
-      services: "Servicios",
+      therapies: "Terapias",
       testimonials: "Testimonios",
       contact: "Contacto",
       bookSession: "Reservar Sesión"
