@@ -113,6 +113,9 @@ export const translations = {
     // Footer
     footer: {
       description: "Empowering individuals to create meaningful change and live their most authentic lives.",
+      quickLinks: "Quick Links",
+      follow: "Follow Us",
+      rights: "All rights reserved.",
       services: "Services",
       lifeCoaching: "Life Coaching",
       wellnessCoaching: "Wellness Coaching",
@@ -240,7 +243,10 @@ export const translations = {
     },
     // Footer
     footer: {
-      description: "Empoderando a individuos para crear cambios significativos y vivir sus vidas más auténticas.",
+      description: "Empoderando a las personas para crear cambios significativos y vivir sus vidas más auténticas.",
+      quickLinks: "Enlaces Rápidos",
+      follow: "Síguenos",
+      rights: "Todos los derechos reservados.",
       services: "Servicios",
       lifeCoaching: "Coaching de Vida",
       wellnessCoaching: "Coaching de Bienestar",

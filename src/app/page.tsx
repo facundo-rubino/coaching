@@ -6,7 +6,6 @@ import { Star, Heart, Users, Target, Phone, Mail, MapPin, Instagram, Facebook, L
 import { useState, useEffect, useCallback } from 'react'
 import { MainContactForm } from '@/components/main-contact-form'
 import { useTranslation } from '@/components/translation-provider'
-import { LanguageToggle } from '@/components/ui/language-toggle'
 
 export default function HomePage() {
   const [currentSlide, setCurrentSlide] = useState(0)
@@ -61,24 +60,6 @@ export default function HomePage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-orange-50 via-white to-orange-50">
-      {/* Navigation */}
-      <nav className="fixed top-0 w-full bg-white/80 backdrop-blur-md border-b border-orange-100 z-50">
-        <div className="container mx-auto px-4 py-4 flex justify-between items-center">
-          <div className="text-2xl font-bold" style={{color: '#FF7453'}}>Serenella</div>
-          <div className="hidden md:flex space-x-8">
-            <a href="#home" className="text-gray-700 hover:text-orange-600 transition-colors">{t.nav.home}</a>
-            <a href="#about" className="text-gray-700 hover:text-orange-600 transition-colors">{t.nav.about}</a>
-            <a href="#services" className="text-gray-700 hover:text-orange-600 transition-colors">{t.nav.services}</a>
-            <a href="#testimonials" className="text-gray-700 hover:text-orange-600 transition-colors">{t.nav.testimonials}</a>
-            <a href="#contact" className="text-gray-700 hover:text-orange-600 transition-colors">{t.nav.contact}</a>
-          </div>
-          <div className="flex items-center gap-4">
-            <LanguageToggle />
-            <Button className="hover:opacity-90 transition-opacity" style={{backgroundColor: '#FF7453'}}>{t.nav.bookSession}</Button>
-          </div>
-        </div>
-      </nav>
-
       {/* Hero Slider Section */}
       <section id="home" className="pt-24 pb-16 px-4 relative overflow-hidden">
         <div className="container mx-auto max-w-6xl">
@@ -445,53 +426,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="bg-gray-900 text-white py-12 px-4">
-        <div className="container mx-auto max-w-6xl">
-          <div className="grid md:grid-cols-4 gap-8">
-            <div>
-              <div className="text-2xl font-bold text-rose-400 mb-4">Serenella</div>
-              <p className="text-gray-400 mb-4">
-                {t.footer.description}
-              </p>
-              <div className="flex gap-4">
-                <Instagram className="w-5 h-5 text-gray-400 hover:text-rose-400 cursor-pointer transition-colors" />
-                <Facebook className="w-5 h-5 text-gray-400 hover:text-blue-400 cursor-pointer transition-colors" />
-                <Linkedin className="w-5 h-5 text-gray-400 hover:text-violet-400 cursor-pointer transition-colors" />
-              </div>
-            </div>
-            <div>
-              <h4 className="font-semibold mb-4">{t.footer.services}</h4>
-              <ul className="space-y-2 text-gray-400">
-                <li><a href="#" className="hover:text-white transition-colors">{t.footer.lifeCoaching}</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">{t.footer.wellnessCoaching}</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">{t.footer.groupPrograms}</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">{t.footer.workshops}</a></li>
-              </ul>
-            </div>
-            <div>
-              <h4 className="font-semibold mb-4">{t.footer.resources}</h4>
-              <ul className="space-y-2 text-gray-400">
-                <li><a href="#" className="hover:text-white transition-colors">{t.footer.blog}</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">{t.footer.freeGuides}</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">{t.footer.meditationLibrary}</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">{t.footer.successStories}</a></li>
-              </ul>
-            </div>
-            <div>
-              <h4 className="font-semibold mb-4">{t.footer.contact}</h4>
-              <ul className="space-y-2 text-gray-400">
-                <li>hello@serenellacoaching.com</li>
-                <li>+1 (555) 123-4567</li>
-                <li>{t.contact.virtualSessions}</li>
-              </ul>
-            </div>
-          </div>
-          <div className="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
-            <p>{t.footer.copyright}</p>
-          </div>
-        </div>
-      </footer>
+      
     </div>
   )
 }

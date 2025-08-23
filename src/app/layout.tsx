@@ -1,23 +1,15 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import { cn } from "@/lib/utils";
-import WhatsAppButton from '../components/ui/wppButton';
 import { TranslationProvider } from "@/components/translation-provider";
-import { FloatingLanguageToggle } from "@/components/floating-language-toggle";
+import { Navbar } from "@/components/layout/Navbar";
+import { Footer } from "@/components/layout/Footer";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Serenella Coaching - Transform Your Life with Mindful Coaching",
-  description: "Certified wellness coach helping individuals discover their potential and create lasting positive change. Life coaching, wellness coaching, and group programs available.",
-  keywords: "life coach, wellness coach, personal development, mindfulness, transformation, coaching services",
-  authors: [{ name: "Serenella" }],
-  openGraph: {
-    title: "Serenella Coaching - Transform Your Life with Mindful Coaching",
-    description: "Certified wellness coach helping individuals discover their potential and create lasting positive change.",
-    type: "website",
-  },
+  title: "Serenella - Wellness Coaching",
+  description: "Transform your life with mindful coaching. Discover your inner strength, overcome limiting beliefs, and create the life you truly desire.",
 };
 
 export default function RootLayout({
@@ -27,11 +19,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="scroll-smooth">
-      <body className={cn(inter.className, "antialiased")}>
+      <body className={inter.className}>
         <TranslationProvider>
-          <FloatingLanguageToggle />
-          <WhatsAppButton />
-          {children}
+          <Navbar />
+          <main className="pt-20">{children}</main>
+          <Footer />
         </TranslationProvider>
       </body>
     </html>
